@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="dark" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lootbox Zentrale - Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;800&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sidebar-link.active {
+            background: rgba(151, 169, 255, 0.1);
+            border-left: 4px solid #97a9ff;
+            color: #97a9ff;
+        }
+        .matrix-card {
+            background: #1c1f2b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+        }
+        .matrix-card:hover {
+            border-color: rgba(151, 169, 255, 0.3);
+            background: #222532;
+        }
+    </style>
+</head>
+<body class="bg-[#0c0e17] text-[#f0f0fd] font-['Manrope'] overflow-x-hidden">
+
+    <!-- LIVING UI -->
+    <div class="particle-container"></div>
+    <div class="glow-orb bg-primary/5 w-[800px] h-[800px] -top-64 -right-64"></div>
+
+    <div class="flex min-h-screen">
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-[#11131d] border-r border-white/5 flex flex-col fixed h-full z-20">
+            <div class="p-6">
+                <h1 class="text-xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk'] mb-8">LOOTBOX ZENTRALE</h1>
+                
+                <nav class="space-y-2">
+                    <button onclick="showPanel('generator')" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                        <span class="material-symbols-outlined">rocket_launch</span> Generator
+                    </button>
+                    <button onclick="showPanel('tasks')" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                        <span class="material-symbols-outlined">grid_view</span> Aufgaben
+                    </button>
+                    <button onclick="showPanel('rewards')" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                        <span class="material-symbols-outlined">military_tech</span> Belohnungen
+                    </button>
+                </nav>
+            </div>
+
+            <div class="mt-auto p-6 border-t border-white/5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded bg-[#97a9ff]/20 flex items-center justify-center border border-[#97a9ff]/30">
+                        <span class="material-symbols-outlined text-[#97a9ff]">shield_person</span>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black uppercase text-[#97a9ff]">Admin</p>
+                        <p class="text-xs font-bold">RIC</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 ml-64 p-10 relative z-10">
+            
+            <!-- PANEL: GENERATOR -->
+            <section id="panel-generator" class="panel animate-fade-in">
+                <div class="max-w-4xl mx-auto">
+                    <header class="mb-10">
+                        <h2 class="text-4xl font-black uppercase tracking-tighter italic font-['Space_Grotesk'] hero-glow">Box Generator</h2>
+                        <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Erstelle neue Lootbox-Links für deine Familie.</p>
+                    </header>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="glass-hud p-8 rounded-2xl border-white/5 space-y-6">
+                            <div>
+                                <label class="text-[10px] font-black uppercase text-[#97a9ff] tracking-[0.2em] mb-2 block">Empfänger</label>
+                                <select id="user-select" class="w-full bg-[#0c0e17] border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-[#97a9ff] transition-all outline-none"></select>
+                            </div>
+                            <p class="text-[10px] text-[#aaaab7] italic">Die Stufe (Bronze/Silber/Gold) wird beim Öffnen zufällig bestimmt.</p>
+                            <button id="generate-btn" class="btn-actuator w-full">LINK ERSTELLEN</button>
+                        </div>
+
+                        <div id="link-area" class="invisible glass-hud p-8 rounded-2xl border-[#97a9ff]/20 bg-[#97a9ff]/5 flex flex-col items-center justify-center text-center">
+                            <span class="material-symbols-outlined text-4xl text-[#97a9ff] mb-4">qr_code_2</span>
+                            <div id="link-display" class="bg-black/40 p-4 rounded-xl text-[10px] font-mono break-all mb-4 border border-white/5"></div>
+                            <button id="copy-btn" class="text-xs font-black uppercase tracking-widest text-[#97a9ff] hover:text-white transition-all">Link kopieren</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANEL: TASKS MATRIX -->
+            <section id="panel-tasks" class="panel hidden animate-fade-in">
+                <header class="mb-10 flex justify-between items-end">
+                    <div>
+                        <h2 class="text-4xl font-black uppercase tracking-tighter italic font-['Space_Grotesk'] hero-glow">Aufgaben-Matrix</h2>
+                        <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Lege fest, welche Aufgaben jeder Nutzer ziehen kann.</p>
+                    </div>
+                    <button id="save-matrix-btn" class="btn-actuator py-3 px-8 text-sm">Speichern</button>
+                </header>
+
+                <div class="user-selector mb-10 flex gap-4" id="matrix-user-selector"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="matrix-task-list">
+                    <!-- Tasks injected here -->
+                </div>
+            </section>
+
+            <!-- PANEL: REWARDS -->
+            <section id="panel-rewards" class="panel hidden animate-fade-in">
+                <header class="mb-10 flex justify-between items-end">
+                    <div>
+                        <h2 class="text-4xl font-black uppercase tracking-tighter italic font-['Space_Grotesk'] hero-glow">Belohnungs-Editor</h2>
+                        <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Verwalte Power-Ups und ihre Wahrscheinlichkeiten.</p>
+                    </div>
+                    <button onclick="addPowerUp()" class="btn-actuator py-3 px-8 text-sm">+ Neue Belohnung</button>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reward-pool">
+                    <!-- Rewards injected here -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAhNw4ItEmcUWnvd5U9neCPCzmP86qxZpI",
+            authDomain: "studio-6734762811-c1c00.firebaseapp.com",
+            projectId: "studio-6734762811-c1c00",
+            storageBucket: "studio-6734762811-c1c00.firebasestorage.app",
+            messagingSenderId: "267087308367",
+            appId: "1:267087308367:web:8cd696bb71e45595292c3a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let masterState = null;
+        let lootConfig = { tasks: {}, powerups: [] };
+        let selectedUserId = null;
+
+        async function init() {
+            await loadData();
+            renderUserSelectors();
+            renderTaskList();
+            renderPowerUpPool();
+        }
+
+        async function loadData() {
+            const masterSnap = await getDoc(doc(db, 'states', 'master'));
+            if (masterSnap.exists()) masterState = masterSnap.data().state;
+
+            const configSnap = await getDoc(doc(db, 'lootbox_config', 'settings'));
+            if (configSnap.exists()) {
+                lootConfig = configSnap.data();
+            } else {
+                // Seed: 15 Beispiel-Belohnungen
+                lootConfig = {
+                    tasks: {},
+                    powerups: [
+                        { id: 'skip',        name: 'Aufgabe Skippen',       desc: 'Eine beliebige Aufgabe überspringen.',                    icon: '⚡', probs: { bronze: 25, silver: 40, gold: 60 } },
+                        { id: 'xpboost',     name: 'Doppel-XP (1h)',        desc: 'Alle XP werden für 1 Stunde verdoppelt.',                 icon: '🔥', probs: { bronze: 10, silver: 25, gold: 50 } },
+                        { id: 'joker',       name: 'Handy-Joker',           desc: 'Handyverbot wird einmalig aufgehoben.',                   icon: '📱', probs: { bronze: 3,  silver: 12, gold: 30 } },
+                        { id: 'screentime',  name: 'Extra Bildschirmzeit',  desc: '+30 Minuten Bildschirmzeit für heute.',                   icon: '🖥️', probs: { bronze: 15, silver: 30, gold: 45 } },
+                        { id: 'candy',       name: 'Süßigkeiten-Gutschein', desc: 'Darf sich eine Süßigkeit aussuchen.',                     icon: '🍬', probs: { bronze: 20, silver: 35, gold: 50 } },
+                        { id: 'taskswap',    name: 'Aufgaben-Tausch',       desc: 'Tausche eine Aufgabe mit einem Familienmitglied.',         icon: '🔄', probs: { bronze: 30, silver: 40, gold: 50 } },
+                        { id: 'latenight',   name: 'Spätaufsteher',         desc: '30 Minuten länger aufbleiben dürfen.',                    icon: '🌙', probs: { bronze: 8,  silver: 20, gold: 40 } },
+                        { id: 'moviepick',   name: 'Film-Abend Wahl',       desc: 'Du darfst den nächsten Familienfilm aussuchen!',           icon: '🎬', probs: { bronze: 12, silver: 25, gold: 35 } },
+                        { id: 'foodpick',    name: 'Wunschessen',           desc: 'Du bestimmst, was es morgen zu essen gibt.',               icon: '🍕', probs: { bronze: 10, silver: 20, gold: 35 } },
+                        { id: 'xpday',       name: 'Doppel-XP Tag',         desc: 'Ein ganzer Tag lang doppelte XP für alles!',              icon: '💎', probs: { bronze: 2,  silver: 8,  gold: 20 } },
+                        { id: 'pocketmoney', name: 'Bonus Taschengeld',     desc: 'Kleiner Bonus auf das nächste Taschengeld.',               icon: '💰', probs: { bronze: 5,  silver: 15, gold: 30 } },
+                        { id: 'gaming',      name: 'Gaming-Pass',           desc: '+1 Stunde extra Spielzeit an der Konsole.',               icon: '🎮', probs: { bronze: 8,  silver: 18, gold: 35 } },
+                        { id: 'breakfast',   name: 'Frühstück ans Bett',    desc: 'Mama oder Papa bringen dir Frühstück ans Bett!',           icon: '🥐', probs: { bronze: 3,  silver: 10, gold: 25 } },
+                        { id: 'freeday',     name: 'Freier Tag',            desc: 'Heute keine Aufgaben! Komplett frei.',                    icon: '🏖️', probs: { bronze: 1,  silver: 5,  gold: 15 } },
+                        { id: 'wildcard',    name: 'Wildcard',              desc: 'Wünsch dir etwas! (im Rahmen der Möglichkeiten 😄)',      icon: '🌟', probs: { bronze: 1,  silver: 3,  gold: 10 } }
+                    ]
+                };
+                await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
+            }
+        }
+
+        function renderUserSelectors() {
+            const kids = Object.values(masterState.users).filter(u => u.role !== 'admin');
+            
+            // Generator
+            const select = document.getElementById('user-select');
+            select.innerHTML = kids.map(k => `<option value="${k.id}">${k.name}</option>`).join('');
+
+            // Matrix
+            const matrixSelector = document.getElementById('matrix-user-selector');
+            matrixSelector.innerHTML = kids.map(k => `
+                <button class="px-6 py-2 rounded-lg border border-white/10 text-xs font-black uppercase tracking-widest transition-all ${selectedUserId === k.id ? 'bg-[#97a9ff] text-indigo-950 border-[#97a9ff]' : 'bg-white/5 hover:bg-white/10'}" 
+                        onclick="selectUser('${k.id}')">${k.name}</button>
+            `).join('');
+            
+            if (!selectedUserId && kids.length > 0) selectUser(kids[0].id);
+        }
+
+        window.selectUser = (id) => {
+            selectedUserId = id;
+            renderUserSelectors();
+            renderTaskList();
+        };
+
+        function renderTaskList() {
+            const list = document.getElementById('matrix-task-list');
+            if (!selectedUserId) return;
+
+            const allowedIds = lootConfig.tasks[selectedUserId] || masterState.taskTemplates.map(t => t.id);
+
+            list.innerHTML = masterState.taskTemplates.map(task => `
+                <div class="matrix-card p-4 rounded-xl flex items-center gap-4 group">
+                    <input type="checkbox" id="task-${task.id}" ${allowedIds.includes(task.id) ? 'checked' : ''} 
+                           class="w-5 h-5 rounded border-white/20 bg-black/40 text-[#97a9ff] focus:ring-0 cursor-pointer">
+                    <div>
+                        <p class="text-[10px] font-black uppercase text-[#aaaab7] tracking-widest">${task.raum}</p>
+                        <p class="text-sm font-bold text-white uppercase">${task.titel}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPowerUpPool() {
+            const pool = document.getElementById('reward-pool');
+            pool.innerHTML = lootConfig.powerups.map((pu, idx) => `
+                <div class="glass-hud p-6 rounded-2xl border-white/10 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-12 h-12 rounded-lg bg-[#97a9ff]/10 flex items-center justify-center border border-[#97a9ff]/20">
+                            <span class="text-2xl">${pu.icon}</span>
+                        </div>
+                        <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick="editPU(${idx})" class="p-2 hover:bg-white/10 rounded">✏️</button>
+                            <button onclick="deletePU(${idx})" class="p-2 hover:bg-red-500/20 rounded">🗑️</button>
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-black uppercase tracking-tight mb-1">${pu.name}</h4>
+                    <p class="text-xs text-[#aaaab7] mb-6">${pu.desc}</p>
+                    
+                    <div class="space-y-4">
+                        ${['bronze', 'silver', 'gold'].map(tier => `
+                            <div>
+                                <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-1">
+                                    <span class="${tier === 'gold' ? 'text-[#ffe792]' : (tier === 'silver' ? 'text-gray-300' : 'text-orange-400')}">${tier}</span>
+                                    <span>${pu.probs[tier]}%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="${pu.probs[tier]}" 
+                                       oninput="updateProb(${idx}, '${tier}', this.value)"
+                                       class="w-full h-1 bg-white/5 rounded-full appearance-none cursor-pointer accent-[#97a9ff]">
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.showPanel = (id) => {
+            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + id).classList.remove('hidden');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        };
+
+        window.updateProb = (idx, tier, val) => {
+            lootConfig.powerups[idx].probs[tier] = parseInt(val);
+            renderPowerUpPool();
+            saveConfig();
+        };
+
+        window.editPU = (idx) => {
+            const pu = lootConfig.powerups[idx];
+            pu.name = prompt("Name:", pu.name) || pu.name;
+            pu.icon = prompt("Icon (Emoji):", pu.icon) || pu.icon;
+            pu.desc = prompt("Beschreibung:", pu.desc) || pu.desc;
+            renderPowerUpPool();
+            saveConfig();
+        };
+
+        window.addPowerUp = () => {
+            const name = prompt("Name der Belohnung:"); if (!name) return;
+            lootConfig.powerups.push({
+                id: 'pu-' + Date.now(),
+                name, icon: '🛡️', desc: 'Bonus-Effekt',
+                probs: { bronze: 5, silver: 15, gold: 30 }
+            });
+            renderPowerUpPool();
+            saveConfig();
+        };
+
+        window.deletePU = (idx) => {
+            if (confirm("Belohnung wirklich löschen?")) {
+                lootConfig.powerups.splice(idx, 1);
+                renderPowerUpPool();
+                saveConfig();
+            }
+        };
+
+        async function saveConfig() {
+            await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
+        }
+
+        document.getElementById('save-matrix-btn').onclick = async () => {
+            const allowedIds = [];
+            masterState.taskTemplates.forEach(t => {
+                if (document.getElementById(`task-${t.id}`).checked) allowedIds.push(t.id);
+            });
+            lootConfig.tasks[selectedUserId] = allowedIds;
+            await saveConfig();
+            const btn = document.getElementById('save-matrix-btn');
+            btn.innerText = "GESPEICHERT ✅";
+            btn.classList.add('bg-green-500/20');
+            setTimeout(() => {
+                btn.innerText = "Speichern";
+                btn.classList.remove('bg-green-500/20');
+            }, 2000);
+        };
+
+        document.getElementById('generate-btn').onclick = async () => {
+            const userId = document.getElementById('user-select').value;
+            const docRef = await addDoc(collection(db, 'pending_lootboxes'), {
+                userId, status: 'pending', createdAt: serverTimestamp()
+            });
+            const baseUrl = window.location.href.split('admin.html')[0];
+            const finalUrl = `${baseUrl}index.html?boxId=${docRef.id}&userId=${userId}`;
+            document.getElementById('link-display').innerText = finalUrl;
+            document.getElementById('link-area').classList.remove('invisible');
+        };
+
+        document.getElementById('copy-btn').onclick = () => {
+            navigator.clipboard.writeText(document.getElementById('link-display').innerText);
+            document.getElementById('copy-btn').innerText = "KOPIERT ✅";
+            setTimeout(() => document.getElementById('copy-btn').innerText = "Link kopieren", 2000);
+        };
+
+        init();
+    </script>
+</body>
+</html>

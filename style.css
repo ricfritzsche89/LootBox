@@ -1,0 +1,151 @@
+/* HERO'S LEDGER - DESIGN SYSTEM */
+:root {
+    /* Foundation (The Void) */
+    --surface: #0c0e17;
+    --surface-low: #11131d;
+    --surface-high: #1c1f2b;
+    --surface-highest: #222532;
+    --surface-bright: #282b3a;
+    
+    /* Accents (High-Voltage) */
+    --primary: #97a9ff;
+    --primary-dim: #3e65ff;
+    --secondary: #c67eff;
+    --tertiary: #ffe792; /* Gold */
+    --error: #ff6e84;
+    
+    /* On-Colors (Cinematic White) */
+    --on-background: #f0f0fd;
+    --on-surface-variant: #aaaab7;
+    --outline-variant: rgba(70, 71, 82, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--surface);
+    color: var(--on-background);
+    font-family: 'Manrope', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .font-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+/* --- KINETIC DEPTH & GLASS --- */
+.glass-hud {
+    background: rgba(34, 37, 50, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--outline-variant);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.hero-glow {
+    text-shadow: 0 0 20px rgba(151, 169, 255, 0.5);
+}
+
+.neon-glow-primary {
+    box-shadow: 0 0 40px -10px rgba(151, 169, 255, 0.2);
+}
+
+.neon-glow-gold {
+    box-shadow: 0 0 50px -5px rgba(255, 231, 146, 0.2);
+}
+
+/* --- LIVING UI: BACKGROUND PARTICLES --- */
+.particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(circle at 2px 2px, rgba(113, 139, 255, 0.05) 1px, transparent 0);
+    background-size: 40px 40px;
+    animation: drift 60s linear infinite;
+}
+
+@keyframes drift {
+    from { background-position: 0 0; }
+    to { background-position: 40px 80px; }
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    animation: pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); opacity: 0.1; }
+    to { transform: scale(1.2); opacity: 0.2; }
+}
+
+/* --- REWARD CARDS (BENTO) --- */
+.holographic-card {
+    background: var(--surface-high);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.holographic-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.holographic-card:hover::after {
+    transform: translateX(100%);
+}
+
+.holographic-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: var(--surface-highest);
+}
+
+/* --- BUTTONS (ACTUATORS) --- */
+.btn-actuator {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dim));
+    color: var(--surface);
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 20px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(62, 101, 255, 0.3);
+}
+
+.btn-actuator:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 30px rgba(62, 101, 255, 0.5);
+}
+
+.btn-actuator:active {
+    transform: scale(0.96);
+}
+
+/* --- UTILS --- */
+.hidden { display: none !important; }
+
+.text-gradient-primary {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

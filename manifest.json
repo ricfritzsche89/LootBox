@@ -1,0 +1,23 @@
+{
+  "name": "Lootbox - Haushalts Buddy",
+  "short_name": "Lootbox",
+  "description": "Die tägliche Belohnung für deinen Einsatz im Haushalt.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0d0d12",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5164/5164023.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5164/5164023.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

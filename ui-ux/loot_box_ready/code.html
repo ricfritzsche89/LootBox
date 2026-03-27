@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hero's Ledger - Loot Box Ready</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#aaaab7",
+                        "on-background": "#f0f0fd",
+                        "secondary-fixed": "#e8c5ff",
+                        "on-secondary-fixed-variant": "#7a00c3",
+                        "error-dim": "#d73357",
+                        "background": "#0c0e17",
+                        "surface-container": "#171924",
+                        "outline": "#737580",
+                        "inverse-primary": "#134af1",
+                        "on-tertiary-fixed": "#453900",
+                        "on-surface": "#f0f0fd",
+                        "surface-dim": "#0c0e17",
+                        "surface-container-lowest": "#000000",
+                        "on-error": "#490013",
+                        "secondary": "#c67eff",
+                        "on-tertiary": "#655400",
+                        "surface-tint": "#97a9ff",
+                        "on-primary-fixed-variant": "#00207e",
+                        "on-tertiary-fixed-variant": "#665500",
+                        "on-secondary-fixed": "#510085",
+                        "surface-container-highest": "#222532",
+                        "tertiary-fixed-dim": "#efc900",
+                        "surface-container-high": "#1c1f2b",
+                        "primary-container": "#859aff",
+                        "secondary-container": "#8e00e2",
+                        "on-primary-container": "#001867",
+                        "on-secondary-container": "#fff5ff",
+                        "error": "#ff6e84",
+                        "tertiary-fixed": "#ffd709",
+                        "on-error-container": "#ffb2b9",
+                        "tertiary-dim": "#efc900",
+                        "on-primary": "#002283",
+                        "primary-fixed-dim": "#718bff",
+                        "surface-variant": "#222532",
+                        "surface-bright": "#282b3a",
+                        "error-container": "#a70138",
+                        "primary": "#97a9ff",
+                        "secondary-dim": "#a82fff",
+                        "inverse-surface": "#faf8ff",
+                        "outline-variant": "#464752",
+                        "on-primary-fixed": "#000000",
+                        "surface-container-low": "#11131d",
+                        "tertiary": "#ffe792",
+                        "primary-fixed": "#859aff",
+                        "on-secondary": "#340058",
+                        "secondary-fixed-dim": "#dfb2ff",
+                        "tertiary-container": "#ffd709",
+                        "on-tertiary-container": "#5b4b00",
+                        "inverse-on-surface": "#53545f",
+                        "primary-dim": "#3e65ff",
+                        "surface": "#0c0e17"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-glow {
+            text-shadow: 0 0 20px rgba(151, 169, 255, 0.5);
+        }
+        .particle-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(113, 139, 255, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0c0e17] dark:bg-[#0c0e17] shadow-[0_4px_20px_rgba(151,169,255,0.15)]">
+<div class="flex items-center gap-8">
+<h1 class="text-2xl font-black italic text-[#97a9ff] tracking-tighter font-['Space_Grotesk'] uppercase">HERO'S LEDGER</h1>
+<nav class="hidden md:flex items-center gap-6 font-['Space_Grotesk'] tracking-tighter font-bold uppercase">
+<a class="text-[#f0f0fd]/60 hover:text-[#f0f0fd] transition-colors" href="#">Missions</a>
+<a class="text-[#f0f0fd]/60 hover:text-[#f0f0fd] transition-colors" href="#">Armory</a>
+<a class="text-[#f0f0fd]/60 hover:text-[#f0f0fd] transition-colors" href="#">Squad</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#97a9ff] hover:bg-[#1c1f2b] transition-all duration-200 p-2 rounded">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-[#97a9ff] hover:bg-[#1c1f2b] transition-all duration-200 p-2 rounded">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Commander Avatar" class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="Close up portrait of a heroic futuristic space commander with tactical visor and glowing blue accents on dark armor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy5Exm24f3BbsSuanIoBVZ9gSClpSGWf96vHsfmf2nRpP1dcIG2lAPsvaH18I_40fxliDj2Qlnk9SUeYDlhve6RNLdBB3GRMXIiTEvJI4e35BlDmVtokGn9hK8pTEfpKsiT9kZAamQEQnMhfMwN0ro6Sln7lpVC5M5f47wZ1WNLl1l63lWIg808Gnl3eJAZWWhKzrR8O3fblEp1KDiw30oAmILY5UGtM0PoVqP28iSLEQ8Bylfml48W6_gcVnaFh_Dfk2lzHJTHdY"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] z-40 bg-[#11131d] dark:bg-[#11131d] w-64 border-r border-[#464752]/15 shadow-2xl">
+<div class="p-6 border-b border-outline-variant/15">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-secondary text-3xl">military_tech</span>
+</div>
+<div>
+<div class="text-[#f0f0fd] font-bold text-xl font-['Space_Grotesk']">LEVEL 42</div>
+<div class="text-[#c67eff] font-medium uppercase text-xs tracking-widest font-['Space_Grotesk']">Vanguard Commander</div>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-3 font-bold tracking-widest uppercase text-sm hover:scale-[1.02] active:scale-95 transition-all">
+                START MISSION
+            </button>
+</div>
+<nav class="flex-1 p-4 font-['Space_Grotesk'] font-medium uppercase text-sm">
+<a class="text-[#f0f0fd]/50 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-[#1c1f2b]/50 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Command Center</span>
+</a>
+<a class="text-[#f0f0fd]/50 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-[#1c1f2b]/50 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Mission Log</span>
+</a>
+<div class="bg-[#1c1f2b] text-[#97a9ff] border-l-4 border-[#97a9ff] px-4 py-3 mb-2 flex items-center gap-3">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Loot Vault</span>
+</div>
+<a class="text-[#f0f0fd]/50 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-[#1c1f2b]/50 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span>Leaderboard</span>
+</a>
+<a class="text-[#f0f0fd]/50 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-[#1c1f2b]/50 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">tune</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="lg:ml-64 pt-24 pb-32 px-6 min-h-screen relative overflow-hidden flex flex-col items-center">
+<!-- Background Effects -->
+<div class="absolute inset-0 particle-bg opacity-30 pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Header Section -->
+<div class="text-center z-10 mb-12">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter uppercase text-on-background hero-glow leading-none">
+                Loot Box <span class="text-primary italic">Ready</span>
+</h2>
+<p class="font-headline text-secondary uppercase tracking-[0.3em] text-sm mt-4 font-semibold">
+                Authorization Secured // Tier: Legendary
+            </p>
+</div>
+<!-- Loot Box Container -->
+<div class="relative z-10 group w-full max-w-2xl flex flex-col items-center">
+<!-- Box Shadow/Glow -->
+<div class="absolute -inset-4 bg-gradient-to-t from-primary/20 via-transparent to-secondary/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+<!-- Central Asset -->
+<div class="relative w-full aspect-square md:aspect-video flex items-center justify-center">
+<!-- Decorative Frames -->
+<div class="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary/40"></div>
+<div class="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary/40"></div>
+<div class="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-primary/40"></div>
+<div class="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-primary/40"></div>
+<!-- The Master Case -->
+<div class="relative w-72 h-72 md:w-96 md:h-96">
+<!-- Glass Surface -->
+<div class="absolute inset-0 bg-surface-container-high/60 backdrop-blur-xl border border-outline-variant/30 rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
+<img alt="Master Case Loot Box" class="w-full h-full object-cover mix-blend-overlay opacity-80" data-alt="A futuristic metallic loot crate with glowing neon blue and purple energy circuits running across its obsidian black surface in a dark void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi1rJ9-k8Ey6GzNOM7uuhFr_4nMXZMqTQsldhsKC5yPnREuSpJWIdxh5Uhk1ZG1QpR4FIpL9BF4HPXtOfJKdXZr2_NVzBzbzApHKndNKMz91NbRvUq_qnf8PgGsjEvNjahCvoMxnbDnGTPKtOK3CAFV75eO2LMlnp-E5wSxCyjp5Z2kADuyorQuQu3oTS758qncdOcoZXsa_ZDc2KrgQBdpZW_wEmejnQnkNCUPiNGL4dMuUVWhn5hAh6-eaPBmxT1DPT6Xd-HAXg"/>
+<!-- HUD Overlay -->
+<div class="absolute inset-0 flex flex-col items-center justify-center p-8 border-[16px] border-surface-container-highest/50">
+<span class="material-symbols-outlined text-primary text-8xl drop-shadow-[0_0_15px_rgba(151,169,255,0.8)]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<div class="mt-4 flex flex-col items-center">
+<span class="text-on-surface-variant font-headline uppercase tracking-widest text-xs font-bold">Scanning Contents...</span>
+<div class="w-32 h-1 bg-surface-container-highest mt-2 flex gap-1">
+<div class="h-full w-1/4 bg-primary"></div>
+<div class="h-full w-1/4 bg-primary"></div>
+<div class="h-full w-1/4 bg-primary/40"></div>
+<div class="h-full w-1/4 bg-surface-container-highest"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Tech Accents -->
+<div class="absolute -top-6 -right-6 w-24 h-24 bg-surface-container-highest/80 backdrop-blur-md rounded-lg border border-primary/20 p-3 flex flex-col justify-between">
+<span class="text-[10px] font-headline font-bold text-tertiary">XP MULTIPLIER</span>
+<span class="text-2xl font-black text-on-background">2.5X</span>
+</div>
+</div>
+</div>
+<!-- Action Zone -->
+<div class="mt-12 w-full flex flex-col items-center gap-6">
+<button class="relative group/btn w-full max-w-sm overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary-container to-primary-dim transition-transform duration-500 group-hover/btn:scale-105"></div>
+<div class="absolute top-0 left-0 w-full h-[1px] bg-white/30"></div>
+<div class="relative py-6 flex items-center justify-center gap-4 text-on-primary font-headline font-black text-2xl tracking-[0.2em] uppercase">
+<span>OPEN CASE</span>
+<span class="material-symbols-outlined text-3xl">lock_open</span>
+</div>
+</button>
+<div class="flex gap-4">
+<div class="px-6 py-2 bg-surface-container-high rounded-full border border-outline-variant/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-headline font-bold text-on-background">1,250 CREDITS</span>
+</div>
+<div class="px-6 py-2 bg-surface-container-high rounded-full border border-outline-variant/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-headline font-bold text-on-background">LEGENDARY DROP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Reward Teaser Grid -->
+<div class="mt-24 w-full max-w-5xl z-10">
+<h3 class="font-headline uppercase tracking-widest text-secondary font-bold text-sm mb-8 text-center">Potential Vault Contents</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Reward Item 1 -->
+<div class="bg-surface-container-high p-6 rounded-lg relative overflow-hidden group hover:bg-surface-container-highest transition-colors">
+<div class="absolute top-0 right-0 p-2">
+<span class="material-symbols-outlined text-primary/30 text-4xl">swords</span>
+</div>
+<div class="relative">
+<div class="text-tertiary font-headline font-bold text-xs mb-1">RARE WEAPON</div>
+<div class="text-on-background font-headline font-black text-lg uppercase tracking-tight">Plasma Cleaver</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant text-xs font-bold uppercase">Drop Rate: 12%</span>
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Reward Item 2 -->
+<div class="bg-surface-container-highest p-6 rounded-lg relative overflow-hidden border border-secondary/30 ring-1 ring-secondary/20">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary/10 rounded-full blur-2xl"></div>
+<div class="relative">
+<div class="text-secondary font-headline font-bold text-xs mb-1">ULTIMATE ARMOR</div>
+<div class="text-on-background font-headline font-black text-lg uppercase tracking-tight">Vanguard Plate</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-secondary-fixed text-xs font-bold uppercase">Drop Rate: 2%</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<!-- Reward Item 3 -->
+<div class="bg-surface-container-high p-6 rounded-lg relative overflow-hidden group hover:bg-surface-container-highest transition-colors">
+<div class="absolute top-0 right-0 p-2">
+<span class="material-symbols-outlined text-primary/30 text-4xl">token</span>
+</div>
+<div class="relative">
+<div class="text-tertiary font-headline font-bold text-xs mb-1">CURRENCY BUNDLE</div>
+<div class="text-on-background font-headline font-black text-lg uppercase tracking-tight">5,000 Credits</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant text-xs font-bold uppercase">Drop Rate: 45%</span>
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="lg:hidden fixed bottom-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-[#0c0e17]/90 backdrop-blur-xl rounded-t-2xl border-t border-[#464752]/20 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<div class="flex flex-col items-center justify-center text-[#f0f0fd]/40 font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest hover:text-[#f0f0fd]">
+<span class="material-symbols-outlined">swords</span>
+<span class="mt-1">Missions</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#97a9ff] scale-110 drop-shadow-[0_0_8px_rgba(151,169,255,0.6)] font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">package_2</span>
+<span class="mt-1">Vault</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f0f0fd]/40 font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest hover:text-[#f0f0fd]">
+<span class="material-symbols-outlined">group</span>
+<span class="mt-1">Social</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f0f0fd]/40 font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest hover:text-[#f0f0fd]">
+<span class="material-symbols-outlined">person</span>
+<span class="mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

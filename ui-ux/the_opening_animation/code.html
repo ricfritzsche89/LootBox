@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface-variant": "#aaaab7",
+              "on-background": "#f0f0fd",
+              "secondary-fixed": "#e8c5ff",
+              "on-secondary-fixed-variant": "#7a00c3",
+              "error-dim": "#d73357",
+              "background": "#0c0e17",
+              "surface-container": "#171924",
+              "outline": "#737580",
+              "inverse-primary": "#134af1",
+              "on-tertiary-fixed": "#453900",
+              "on-surface": "#f0f0fd",
+              "surface-dim": "#0c0e17",
+              "surface-container-lowest": "#000000",
+              "on-error": "#490013",
+              "secondary": "#c67eff",
+              "on-tertiary": "#655400",
+              "surface-tint": "#97a9ff",
+              "on-primary-fixed-variant": "#00207e",
+              "on-tertiary-fixed-variant": "#665500",
+              "on-secondary-fixed": "#510085",
+              "surface-container-highest": "#222532",
+              "tertiary-fixed-dim": "#efc900",
+              "surface-container-high": "#1c1f2b",
+              "primary-container": "#859aff",
+              "secondary-container": "#8e00e2",
+              "on-primary-container": "#001867",
+              "on-secondary-container": "#fff5ff",
+              "error": "#ff6e84",
+              "tertiary-fixed": "#ffd709",
+              "on-error-container": "#ffb2b9",
+              "tertiary-dim": "#efc900",
+              "on-primary": "#002283",
+              "primary-fixed-dim": "#718bff",
+              "surface-variant": "#222532",
+              "surface-bright": "#282b3a",
+              "error-container": "#a70138",
+              "primary": "#97a9ff",
+              "secondary-dim": "#a82fff",
+              "inverse-surface": "#faf8ff",
+              "outline-variant": "#464752",
+              "on-primary-fixed": "#000000",
+              "surface-container-low": "#11131d",
+              "tertiary": "#ffe792",
+              "primary-fixed": "#859aff",
+              "on-secondary": "#340058",
+              "secondary-fixed-dim": "#dfb2ff",
+              "tertiary-container": "#ffd709",
+              "on-tertiary-container": "#5b4b00",
+              "inverse-on-surface": "#53545f",
+              "primary-dim": "#3e65ff",
+              "surface": "#0c0e17"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-epic {
+            text-shadow: 0 0 20px rgba(198, 126, 255, 0.8), 0 0 40px rgba(151, 169, 255, 0.5);
+        }
+        .burst-bg {
+            background: radial-gradient(circle, rgba(255, 231, 146, 0.2) 0%, rgba(198, 126, 255, 0.1) 40%, rgba(12, 14, 23, 0) 70%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen overflow-hidden">
+<!-- The TopAppBar is suppressed per "Task-Focused/Transactional" rule - this is an animation focus screen -->
+<main class="relative w-full h-screen flex flex-col items-center justify-center bg-surface overflow-hidden">
+<!-- Background Dynamic Particles Effect (CSS simulated) -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-40">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute inset-0 burst-bg"></div>
+</div>
+<!-- Epic Burst Centerpiece -->
+<div class="relative z-10 flex flex-col items-center justify-center">
+<!-- Central Light Burst Image -->
+<div class="relative w-[600px] h-[600px] flex items-center justify-center">
+<!-- Inner Core Glow -->
+<div class="absolute w-32 h-32 bg-tertiary rounded-full blur-[60px] opacity-80"></div>
+<img alt="Epic Loot Box Explosion" class="w-full h-full object-contain mix-blend-screen scale-125" data-alt="Explosive burst of golden sparks and purple energy trails from a central point, high contrast cinematic gaming VFX animation frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Uqkv1t8dRKZ9EmBrGV3zUPLSiJU-MKdMoN9Fo059Hg8i2FUjhNJnMEcZYLLAfO7CnPn1FyLnkcqvTCRx2qiqkXsEoKPegBS3uzotfebcfRwNTjYGjWFLgOJP0EZ2oSVWb-qlkVHScYqgcXsPTbNp4ytKvaGcoc9a9t5pm_waIHYwIXfrKbiytD6nHoH5YGQg5sk7vYuZapFPxCoNA_tSbCvMTOisySS0l0EO6u6iADcpHKFOOG9iJ2L8zW_Rr_dNgygsSLs61cc"/>
+<!-- Floating Item Preview (The Reward) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group">
+<div class="relative w-48 h-48 bg-surface-container-highest/60 backdrop-blur-2xl border border-primary/20 p-1 rounded-xl shadow-[0_0_50px_rgba(151,169,255,0.3)] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20"></div>
+<span class="material-symbols-outlined text-8xl text-tertiary glow-epic" data-icon="military_tech" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<!-- XP Badge Overlay -->
+<div class="absolute -bottom-4 -right-4 bg-tertiary text-on-tertiary px-4 py-2 font-headline font-black text-xl italic skew-x-[-12deg] shadow-2xl">
+                        +5000 XP
+                    </div>
+</div>
+</div>
+<!-- Content Overlay -->
+<div class="text-center mt-8 space-y-4 max-w-2xl px-6">
+<h1 class="font-headline text-6xl md:text-8xl font-black italic tracking-tighter text-on-background uppercase drop-shadow-2xl">
+                    LEGENDARY <span class="text-secondary">UNLOCKED</span>
+</h1>
+<p class="font-headline text-2xl font-bold tracking-widest text-on-surface-variant uppercase">
+                    Vanguard Commander's Crest
+                </p>
+<!-- Action Tier -->
+<div class="pt-12 flex flex-col items-center gap-6">
+<button class="group relative px-12 py-5 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-headline font-black text-xl tracking-tighter uppercase rounded-lg shadow-[0_0_30px_rgba(151,169,255,0.4)] hover:shadow-[0_0_50px_rgba(151,169,255,0.6)] active:scale-95 transition-all duration-200">
+<span class="relative z-10">CLAIM YOUR REWARD</span>
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<button class="text-on-surface-variant font-headline font-bold uppercase tracking-widest text-sm hover:text-on-surface transition-colors">
+                        Inspect Gear Details
+                    </button>
+</div>
+</div>
+</div>
+<!-- Peripheral Decorative Elements -->
+<div class="absolute top-12 left-12 font-headline text-primary/40 text-xs tracking-[0.5em] hidden md:block">
+            DECRYPTING_SIGNAL_042 // REWARD_SECURED
+        </div>
+<div class="absolute bottom-12 right-12 font-headline text-secondary/40 text-xs tracking-[0.5em] hidden md:block">
+            HERO_LEDGER_SYSTEMS // READY_FOR_DEPLOYMENT
+        </div>
+</main>
+<!-- SideNavBar & BottomNavBar suppressed per "Task-Focused" rule - the user is in a focused reward animation -->
+<!-- Corner HUD Elements -->
+<div class="fixed top-8 right-8 flex items-center gap-4 z-50">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-headline font-bold text-secondary/60 tracking-widest uppercase">Current Rank</span>
+<span class="text-2xl font-headline font-black text-on-background italic">LEVEL 42</span>
+</div>
+<div class="w-12 h-12 bg-surface-container-high border border-outline-variant/30 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+</div>
+</body></html>
