@@ -18,14 +18,14 @@
     <div class="glow-orb bg-secondary/10 w-[500px] h-[500px] -bottom-32 -right-32" style="animation-delay: -5s;"></div>
 
     <!-- HUD OVERLAY (Always Visible) -->
-    <header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0c0e17]/60 backdrop-blur-lg border-b border-white/5">
-        <h1 class="text-2xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk']">LOOTBOX</h1>
-        <div class="flex items-center gap-4">
+    <header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 h-16 bg-[#0c0e17]/60 backdrop-blur-lg border-b border-white/5">
+        <h1 class="text-xl sm:text-2xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk']">LOOTBOX</h1>
+        <div class="flex items-center gap-2 sm:gap-4">
             <div id="user-info" class="flex flex-col items-end">
-                <span id="user-name" class="text-[10px] font-bold text-[#c67eff] tracking-widest uppercase font-['Space_Grotesk']">Nutzer</span>
-                <span id="user-xp-label" class="text-xs font-black text-white italic">LVL --</span>
+                <span id="user-name" class="text-[8px] sm:text-[10px] font-bold text-[#c67eff] tracking-widest uppercase font-['Space_Grotesk']">Nutzer</span>
+                <span id="user-xp-label" class="text-[10px] sm:text-xs font-black text-white italic whitespace-nowrap">LVL --</span>
             </div>
-            <div class="w-10 h-10 rounded-lg bg-[#222532] flex items-center justify-center border border-[#97a9ff]/20 overflow-hidden">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#222532] flex items-center justify-center border border-[#97a9ff]/20 overflow-hidden">
                 <img id="user-avatar" src="" alt="Avatar" class="w-full h-full object-cover">
             </div>
         </div>
@@ -34,22 +34,22 @@
     <main class="relative z-10 min-h-screen flex items-center justify-center pt-16 pb-20">
 
         <!-- SCREEN: READY -->
-        <section id="screen-ready" class="w-full max-w-2xl px-6 flex flex-col items-center animate-fade-in">
-            <div class="text-center mb-12">
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase hero-glow leading-none font-['Space_Grotesk']">
+        <section id="screen-ready" class="w-full max-w-2xl px-6 flex flex-col items-center animate-fade-in text-center">
+            <div class="mb-8 sm:mb-12">
+                <h2 class="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase hero-glow leading-none font-['Space_Grotesk']">
                     LOOT BOX <span class="italic" style="color:#c67eff">BEREIT</span>
                 </h2>
-                <div class="uppercase tracking-[0.3em] text-sm mt-4 font-bold" style="color:#aaaab7">
-                    Stufe: ??? // Wird beim Öffnen bestimmt
+                <div class="uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm mt-4 font-bold opacity-60" style="color:#aaaab7">
+                    Stufe: ??? // Mystery-Drop
                 </div>
             </div>
 
             <!-- The Mystery Case -->
             <div class="relative group cursor-pointer active:scale-95 transition-transform" id="open-trigger">
                 <div class="absolute -inset-10 blur-3xl opacity-40 group-hover:opacity-80 transition-opacity" style="background:radial-gradient(circle, rgba(198,126,255,0.25), transparent)"></div>
-                <div class="relative w-72 h-72 md:w-96 md:h-96 glass-hud rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8" style="box-shadow: 0 0 40px -10px rgba(198,126,255,0.2); border: 2px solid rgba(198,126,255,0.15)">
-                    <span class="material-symbols-outlined text-8xl animate-pulse" style="color:#c67eff; filter: drop-shadow(0 0 25px rgba(198,126,255,0.6)); font-variation-settings: 'FILL' 1;">help_center</span>
-                    <div class="mt-6 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em]" style="background:rgba(198,126,255,0.1); color:#c67eff; border: 1px solid rgba(198,126,255,0.2)">
+                <div class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 glass-hud rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8" style="box-shadow: 0 0 40px -10px rgba(198,126,255,0.2); border: 2px solid rgba(198,126,255,0.15)">
+                    <span class="material-symbols-outlined text-7xl sm:text-8xl animate-pulse" style="color:#c67eff; filter: drop-shadow(0 0 25px rgba(198,126,255,0.6)); font-variation-settings: 'FILL' 1;">help_center</span>
+                    <div class="mt-6 px-4 py-2 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em]" style="background:rgba(198,126,255,0.1); color:#c67eff; border: 1px solid rgba(198,126,255,0.2)">
                         ??? GEHEIM
                     </div>
                 </div>

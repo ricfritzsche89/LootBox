@@ -175,30 +175,38 @@
             const configSnap = await getDoc(doc(db, 'lootbox_config', 'settings'));
             if (configSnap.exists()) {
                 lootConfig = configSnap.data();
+                if (!lootConfig.powerups || lootConfig.powerups.length === 0) {
+                    lootConfig.powerups = getInitialRewards();
+                    await saveConfig();
+                }
             } else {
-                // Seed: 15 Beispiel-Belohnungen
-                lootConfig = {
-                    tasks: {},
-                    powerups: [
-                        { id: 'skip',        name: 'Aufgabe Skippen',       desc: 'Eine beliebige Aufgabe überspringen.',                    icon: '⚡', probs: { bronze: 25, silver: 40, gold: 60 } },
-                        { id: 'xpboost',     name: 'Doppel-XP (1h)',        desc: 'Alle XP werden für 1 Stunde verdoppelt.',                 icon: '🔥', probs: { bronze: 10, silver: 25, gold: 50 } },
-                        { id: 'joker',       name: 'Handy-Joker',           desc: 'Handyverbot wird einmalig aufgehoben.',                   icon: '📱', probs: { bronze: 3,  silver: 12, gold: 30 } },
-                        { id: 'screentime',  name: 'Extra Bildschirmzeit',  desc: '+30 Minuten Bildschirmzeit für heute.',                   icon: '🖥️', probs: { bronze: 15, silver: 30, gold: 45 } },
-                        { id: 'candy',       name: 'Süßigkeiten-Gutschein', desc: 'Darf sich eine Süßigkeit aussuchen.',                     icon: '🍬', probs: { bronze: 20, silver: 35, gold: 50 } },
-                        { id: 'taskswap',    name: 'Aufgaben-Tausch',       desc: 'Tausche eine Aufgabe mit einem Familienmitglied.',         icon: '🔄', probs: { bronze: 30, silver: 40, gold: 50 } },
-                        { id: 'latenight',   name: 'Spätaufsteher',         desc: '30 Minuten länger aufbleiben dürfen.',                    icon: '🌙', probs: { bronze: 8,  silver: 20, gold: 40 } },
-                        { id: 'moviepick',   name: 'Film-Abend Wahl',       desc: 'Du darfst den nächsten Familienfilm aussuchen!',           icon: '🎬', probs: { bronze: 12, silver: 25, gold: 35 } },
-                        { id: 'foodpick',    name: 'Wunschessen',           desc: 'Du bestimmst, was es morgen zu essen gibt.',               icon: '🍕', probs: { bronze: 10, silver: 20, gold: 35 } },
-                        { id: 'xpday',       name: 'Doppel-XP Tag',         desc: 'Ein ganzer Tag lang doppelte XP für alles!',              icon: '💎', probs: { bronze: 2,  silver: 8,  gold: 20 } },
-                        { id: 'pocketmoney', name: 'Bonus Taschengeld',     desc: 'Kleiner Bonus auf das nächste Taschengeld.',               icon: '💰', probs: { bronze: 5,  silver: 15, gold: 30 } },
-                        { id: 'gaming',      name: 'Gaming-Pass',           desc: '+1 Stunde extra Spielzeit an der Konsole.',               icon: '🎮', probs: { bronze: 8,  silver: 18, gold: 35 } },
-                        { id: 'breakfast',   name: 'Frühstück ans Bett',    desc: 'Mama oder Papa bringen dir Frühstück ans Bett!',           icon: '🥐', probs: { bronze: 3,  silver: 10, gold: 25 } },
-                        { id: 'freeday',     name: 'Freier Tag',            desc: 'Heute keine Aufgaben! Komplett frei.',                    icon: '🏖️', probs: { bronze: 1,  silver: 5,  gold: 15 } },
-                        { id: 'wildcard',    name: 'Wildcard',              desc: 'Wünsch dir etwas! (im Rahmen der Möglichkeiten 😄)',      icon: '🌟', probs: { bronze: 1,  silver: 3,  gold: 10 } }
-                    ]
-                };
-                await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
+                lootConfig = { tasks: {}, powerups: getInitialRewards() };
+                await saveConfig();
             }
+        }
+
+        function getInitialRewards() {
+            return [
+                { id: 'skip',        name: 'Aufgabe Skippen',       desc: 'Eine beliebige Aufgabe überspringen.',                    icon: '⚡', probs: { bronze: 25, silver: 40, gold: 60 } },
+                { id: 'xpboost',     name: 'Doppel-XP (1h)',        desc: 'Alle XP werden für 1 Stunde verdoppelt.',                 icon: '🔥', probs: { bronze: 10, silver: 25, gold: 50 } },
+                { id: 'joker',       name: 'Handy-Joker',           desc: 'Handyverbot wird einmalig aufgehoben.',                   icon: '📱', probs: { bronze: 3,  silver: 12, gold: 30 } },
+                { id: 'screentime',  name: 'Extra Bildschirmzeit',  desc: '+30 Minuten Bildschirmzeit für heute.',                   icon: '🖥️', probs: { bronze: 15, silver: 30, gold: 45 } },
+                { id: 'candy',       name: 'Süßigkeiten-Gutschein', desc: 'Darf sich eine Süßigkeit aussuchen.',                     icon: '🍬', probs: { bronze: 20, silver: 35, gold: 50 } },
+                { id: 'taskswap',    name: 'Aufgaben-Tausch',       desc: 'Tausche eine Aufgabe mit einem Familienmitglied.',         icon: '🔄', probs: { bronze: 30, silver: 40, gold: 50 } },
+                { id: 'latenight',   name: 'Spätaufsteher',         desc: '30 Minuten länger aufbleiben dürfen.',                    icon: '🌙', probs: { bronze: 8,  silver: 20, gold: 40 } },
+                { id: 'moviepick',   name: 'Film-Abend Wahl',       desc: 'Du darfst den nächsten Familienfilm aussuchen!',           icon: '🎬', probs: { bronze: 12, silver: 25, gold: 35 } },
+                { id: 'foodpick',    name: 'Wunschessen',           desc: 'Du bestimmst, was es morgen zu essen gibt.',               icon: '🍕', probs: { bronze: 10, silver: 20, gold: 35 } },
+                { id: 'xpday',       name: 'Doppel-XP Tag',         desc: 'Ein ganzer Tag lang doppelte XP für alles!',              icon: '💎', probs: { bronze: 2,  silver: 8,  gold: 20 } },
+                { id: 'pocketmoney', name: 'Bonus Taschengeld',     desc: 'Kleiner Bonus auf das nächste Taschengeld.',               icon: '💰', probs: { bronze: 5,  silver: 15, gold: 30 } },
+                { id: 'gaming',      name: 'Gaming-Pass',           desc: '+1 Stunde extra Spielzeit an der Konsole.',               icon: '🎮', probs: { bronze: 8,  silver: 18, gold: 35 } },
+                { id: 'breakfast',   name: 'Frühstück ans Bett',    desc: 'Mama oder Papa bringen dir Frühstück ans Bett!',           icon: '🥐', probs: { bronze: 3,  silver: 10, gold: 25 } },
+                { id: 'freeday',     name: 'Freier Tag',            desc: 'Heute keine Aufgaben! Komplett frei.',                    icon: '🏖️', probs: { bronze: 1,  silver: 5,  gold: 15 } },
+                { id: 'wildcard',    name: 'Wildcard',              desc: 'Wünsch dir etwas! (im Rahmen der Möglichkeiten 😄)',      icon: '🌟', probs: { bronze: 1,  silver: 3,  gold: 10 } }
+            ];
+        }
+
+        async function saveConfig() {
+            await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
         }
 
         function renderUserSelectors() {
