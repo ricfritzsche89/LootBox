@@ -74,6 +74,18 @@
                         <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Erstelle neue Lootbox-Links für deine Familie.</p>
                     </header>
 
+                    <!-- MASTER LINKS SECTION -->
+                    <div class="glass-hud p-8 rounded-2xl border-white/5 mb-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-[#97a9ff]">link</span>
+                            <h3 class="text-xl font-black uppercase tracking-tight">Dauerhafte Links</h3>
+                        </div>
+                        <div id="master-links-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Dynamisch gefüllt via JS -->
+                        </div>
+                        <p class="text-[10px] text-[#aaaab7] mt-4 italic">Diese Links ändern sich nie und zeigen immer die aktuellste Box an.</p>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="glass-hud p-8 rounded-2xl border-white/5 space-y-6">
                             <div>
@@ -204,7 +216,38 @@
             `).join('');
             
             if (!selectedUserId && kids.length > 0) selectUser(kids[0].id);
+            renderMasterLinks();
         }
+
+        function renderMasterLinks() {
+            const kids = Object.values(masterState.users).filter(u => u.role !== 'admin');
+            const container = document.getElementById('master-links-container');
+            const baseUrl = window.location.href.split('admin.html')[0];
+
+            container.innerHTML = kids.map(k => {
+                const url = `${baseUrl}index.html?userId=${k.id}`;
+                return `
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-black uppercase text-[#97a9ff]">${k.name}</span>
+                            <button onclick="copyToClipboard('${url}', this)" class="text-[10px] font-black uppercase bg-white/5 px-2 py-1 rounded hover:bg-white/10 transition-all">Kopieren</button>
+                        </div>
+                        <div class="text-[9px] font-mono text-[#aaaab7] truncate">${url}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.copyToClipboard = (text, btn) => {
+            navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = "KOPIERT ✅";
+            btn.classList.add('text-green-400');
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('text-green-400');
+            }, 2000);
+        };
 
         window.selectUser = (id) => {
             selectedUserId = id;

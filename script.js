@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion, query, collection, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAhNw4ItEmcUWnvd5U9neCPCzmP86qxZpI",
@@ -14,7 +14,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // State
-let currentBoxId = 'test-box';
+let currentBoxId = null;
 let currentUserId = 'Tayler';
 let boxTier = 'bronze';
 let masterState = null;
@@ -34,15 +34,35 @@ async function init() {
     console.log("Lade Lootbox-Daten...");
 
     const params = new URLSearchParams(window.location.search);
-    currentBoxId = params.get('boxId') || 'test-box';
+    currentBoxId = params.get('boxId');
     currentUserId = params.get('userId') || 'Tayler';
 
     try {
         await fetchMasterState();
         await fetchLootConfig();
-        await fetchBoxDetails();
 
-        if (!masterState) throw new Error("No master state found");
+        if (!masterState) throw new Error("Kein Benutzer-Status gefunden.");
+
+        // MASTER-LINK LOGIK: Wenn keine Box-ID da ist, suche die neueste offene Box
+        if (!currentBoxId) {
+            const q = query(
+                collection(db, 'pending_lootboxes'),
+                where('userId', '==', currentUserId),
+                where('status', '==', 'pending'),
+                orderBy('createdAt', 'desc'),
+                limit(1)
+            );
+            const querySnap = await getDocs(q);
+            if (!querySnap.empty) {
+                currentBoxId = querySnap.docs[0].id;
+            }
+        }
+
+        if (currentBoxId) {
+            await fetchBoxDetails();
+        } else {
+            showNoBoxScreen();
+        }
 
         updateUserHUD();
         const overlay = $('loading-overlay');
@@ -54,7 +74,6 @@ async function init() {
             <div style="text-align:center;padding:40px;">
                 <p style="color:#ff6e84;font-weight:bold;">FEHLER BEIM LADEN</p>
                 <p style="color:#aaaab7;font-size:12px;margin-top:8px;">${error.message}</p>
-                <p style="color:#aaaab7;font-size:10px;margin-top:16px;">Tipp: Nutze einen lokalen Webserver (Live Server)</p>
             </div>`;
     }
 }
@@ -71,10 +90,23 @@ async function fetchLootConfig() {
 
 async function fetchBoxDetails() {
     if (currentBoxId === 'test-box') return;
-    // Just verify box exists & is pending, don't read tier
     const snap = await getDoc(doc(db, 'pending_lootboxes', currentBoxId));
     if (snap.exists() && snap.data().status === 'opened') {
-        alert("Diese Box wurde bereits geöffnet!");
+        showNoBoxScreen("Diese Box wurde bereits geöffnet! Warte auf die nächste Belohnung.");
+    }
+}
+
+function showNoBoxScreen(customMsg) {
+    const boxScreen = $('box-screen');
+    const noBoxScreen = $('no-box-screen');
+    if (boxScreen) boxScreen.classList.add('hidden');
+    if (noBoxScreen) {
+        noBoxScreen.classList.remove('hidden');
+        noBoxScreen.classList.add('flex');
+        if (customMsg) {
+            const p = noBoxScreen.querySelector('p');
+            if (p) p.innerText = customMsg;
+        }
     }
 }
 
