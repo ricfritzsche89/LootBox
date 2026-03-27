@@ -28,25 +28,46 @@
             -webkit-appearance: none;
             margin: 0;
         }
+        /* Mobile Sidebar Overrides */
+        @media (max-width: 1023px) {
+            .sidebar-open aside {
+                transform: translateX(0) !important;
+            }
+            .sidebar-open .sidebar-overlay {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
     </style>
 </head>
 <body class="bg-[#0c0e17] text-[#f0f0fd] font-['Manrope'] overflow-x-hidden">
+
+    <!-- MOBILE HEADER -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#11131d] border-b border-white/5 z-30 flex items-center px-6">
+        <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[#97a9ff]">menu</span>
+        </button>
+        <span class="ml-4 text-xs font-black uppercase tracking-widest text-[#97a9ff] font-['Space_Grotesk']">Zentrale</span>
+    </header>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div onclick="toggleSidebar()" class="sidebar-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
 
     <div class="particle-container"></div>
     <div class="glow-orb bg-primary/5 w-[800px] h-[800px] -top-64 -right-64"></div>
 
     <div class="flex min-h-screen">
-        <aside class="w-64 bg-[#11131d] border-r border-white/5 flex flex-col fixed h-full z-20">
+        <aside id="main-sidebar" class="w-64 bg-[#11131d] border-r border-white/5 flex flex-col fixed h-full z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
             <div class="p-6">
                 <h1 class="text-xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk'] mb-8">LOOTBOX ZENTRALE</h1>
                 <nav class="space-y-2">
-                    <button onclick="showPanel('generator', this)" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('generator', this); closeSidebarMobile()" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">rocket_launch</span> Generator
                     </button>
-                    <button onclick="showPanel('tasks', this)" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('tasks', this); closeSidebarMobile()" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">grid_view</span> Aufgaben
                     </button>
-                    <button onclick="showPanel('rewards', this)" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('rewards', this); closeSidebarMobile()" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">military_tech</span> Belohnungen
                     </button>
                 </nav>
@@ -64,7 +85,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 ml-64 p-10 relative z-10">
+        <main class="flex-1 ml-0 lg:ml-64 p-6 pt-24 sm:p-10 relative z-10 transition-all">
             <section id="panel-generator" class="panel animate-fade-in">
                 <div class="max-w-4xl mx-auto">
                     <header class="mb-10">
@@ -170,6 +191,15 @@
         let selectedUserId = null;
 
         const EMOJI_LIST = ['⚡','🔥','🚀','☄️','📱','🖥️','🍬','🔄','🌙','🎬','🍕','💰','💶','🎮','🥐','🏖️','🌟','💎','🎁','🛡️','🏹','🧪','💊','🩹','🧼','🧽','🧹','🧺','🧸','🎈'];
+
+        // MOBILE SIDEBAR
+        window.toggleSidebar = () => {
+            document.body.classList.toggle('sidebar-open');
+        };
+
+        window.closeSidebarMobile = () => {
+            document.body.classList.remove('sidebar-open');
+        };
 
         async function init() {
             await loadData();
