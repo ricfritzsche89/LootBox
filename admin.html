@@ -38,13 +38,13 @@
                 <h1 class="text-xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk'] mb-8">LOOTBOX ZENTRALE</h1>
                 
                 <nav class="space-y-2">
-                    <button onclick="showPanel('generator')" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('generator', this)" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">rocket_launch</span> Generator
                     </button>
-                    <button onclick="showPanel('tasks')" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('tasks', this)" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">grid_view</span> Aufgaben
                     </button>
-                    <button onclick="showPanel('rewards')" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
+                    <button onclick="showPanel('rewards', this)" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
                         <span class="material-symbols-outlined">military_tech</span> Belohnungen
                     </button>
                 </nav>
@@ -314,11 +314,13 @@
             `).join('');
         }
 
-        window.showPanel = (id) => {
+        window.showPanel = (id, btn) => {
             document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
-            document.getElementById('panel-' + id).classList.remove('hidden');
+            const target = document.getElementById('panel-' + id);
+            if (target) target.classList.remove('hidden');
+            
             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if (btn) btn.classList.add('active');
         };
 
         window.updateProb = (idx, tier, val) => {
@@ -355,9 +357,6 @@
             }
         };
 
-        async function saveConfig() {
-            await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
-        }
 
         document.getElementById('save-matrix-btn').onclick = async () => {
             const allowedIds = [];
