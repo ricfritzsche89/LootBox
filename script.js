@@ -223,9 +223,12 @@ function runBurstAnimation() {
 
 function rollRandomTier() {
     const roll = Math.random() * 100;
-    if (roll < 10) return 'gold';      // 10% Chance
-    if (roll < 40) return 'silver';    // 30% Chance
-    return 'bronze';                    // 60% Chance
+    const settings = lootConfig?.tierSettings || { bronze: 60, silver: 30, gold: 10 };
+    
+    // Wir prüfen von Gold nach Bronze
+    if (roll < settings.gold) return 'gold';
+    if (roll < (settings.gold + settings.silver)) return 'silver';
+    return 'bronze';
 }
 
 async function openLootbox() {
