@@ -43,18 +43,23 @@ async function init() {
 
         if (!masterState) throw new Error("Kein Benutzer-Status gefunden.");
 
-        // MASTER-LINK LOGIK: Wenn keine Box-ID da ist, suche die neueste offene Box
+        // MASTER-LINK LOGIK: Index-freie Abfrage (Filter & Sort im JS)
         if (!currentBoxId) {
             const q = query(
                 collection(db, 'pending_lootboxes'),
-                where('userId', '==', currentUserId),
-                where('status', '==', 'pending'),
-                orderBy('createdAt', 'desc'),
-                limit(1)
+                where('userId', '==', currentUserId)
             );
             const querySnap = await getDocs(q);
             if (!querySnap.empty) {
-                currentBoxId = querySnap.docs[0].id;
+                // Filtere nur 'pending' und sortiere nach Zeitstempel absteigend
+                const pendingBoxes = querySnap.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(box => box.status === 'pending')
+                    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+                if (pendingBoxes.length > 0) {
+                    currentBoxId = pendingBoxes[0].id;
+                }
             }
         }
 
