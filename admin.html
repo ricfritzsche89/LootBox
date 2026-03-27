@@ -129,7 +129,10 @@
                         <h2 class="text-4xl font-black uppercase tracking-tighter italic font-['Space_Grotesk'] hero-glow">Belohnungs-Editor</h2>
                         <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Verwalte Power-Ups und ihre Wahrscheinlichkeiten.</p>
                     </div>
-                    <button onclick="addPowerUp()" class="btn-actuator py-3 px-8 text-sm">+ Neue Belohnung</button>
+                    <div class="flex gap-2">
+                        <button onclick="forceSeedRewards()" class="btn-actuator py-3 px-6 text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/30">Standard-Pool laden</button>
+                        <button onclick="addPowerUp()" class="btn-actuator py-3 px-8 text-sm">+ Neue Belohnung</button>
+                    </div>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reward-pool">
@@ -175,7 +178,9 @@
             const configSnap = await getDoc(doc(db, 'lootbox_config', 'settings'));
             if (configSnap.exists()) {
                 lootConfig = configSnap.data();
-                if (!lootConfig.powerups || lootConfig.powerups.length === 0) {
+                // Wenn die Power-Up Liste nicht existiert oder leer ist, trotzdem seeden
+                if (!lootConfig.powerups || !Array.isArray(lootConfig.powerups) || lootConfig.powerups.length === 0) {
+                    console.warn("LootConfig powerups empty, seeding...");
                     lootConfig.powerups = getInitialRewards();
                     await saveConfig();
                 }
@@ -208,6 +213,15 @@
         async function saveConfig() {
             await setDoc(doc(db, 'lootbox_config', 'settings'), lootConfig);
         }
+
+        window.forceSeedRewards = async () => {
+            if (confirm("Möchtest du wirklich alle Belohnungen auf den Standard-Pool zurücksetzen? Bestehende Anpassungen gehen verloren.")) {
+                lootConfig.powerups = getInitialRewards();
+                await saveConfig();
+                renderPowerUpPool();
+                alert("Standard-Pool erfolgreich geladen! 🎉");
+            }
+        };
 
         function renderUserSelectors() {
             const kids = Object.values(masterState.users).filter(u => u.role !== 'admin');
