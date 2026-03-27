@@ -6,7 +6,7 @@
     <title>Lootbox Zentrale - Admin</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;800&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,FILL@0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         .sidebar-link.active {
@@ -28,8 +28,8 @@
             -webkit-appearance: none;
             margin: 0;
         }
-        /* Mobile Sidebar Overrides */
-        @media (max-width: 1023px) {
+        /* Mobile Side-Drawer Overrides */
+        @media (max-width: 767px) {
             .sidebar-open aside {
                 transform: translateX(0) !important;
             }
@@ -42,22 +42,22 @@
 </head>
 <body class="bg-[#0c0e17] text-[#f0f0fd] font-['Manrope'] overflow-x-hidden">
 
-    <!-- MOBILE HEADER -->
-    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#11131d] border-b border-white/5 z-30 flex items-center px-6">
+    <!-- MOBILE HEADER (Below 768px visible) -->
+    <header class="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#11131d] border-b border-white/5 z-30 flex items-center px-6">
         <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 active:scale-95 transition-all">
             <span class="material-symbols-outlined text-[#97a9ff]">menu</span>
         </button>
         <span class="ml-4 text-xs font-black uppercase tracking-widest text-[#97a9ff] font-['Space_Grotesk']">Zentrale</span>
     </header>
 
-    <!-- SIDEBAR OVERLAY -->
-    <div onclick="toggleSidebar()" class="sidebar-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+    <!-- SIDEBAR OVERLAY (Mobile only) -->
+    <div onclick="toggleSidebar()" class="sidebar-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
 
     <div class="particle-container"></div>
     <div class="glow-orb bg-primary/5 w-[800px] h-[800px] -top-64 -right-64"></div>
 
     <div class="flex min-h-screen">
-        <aside id="main-sidebar" class="w-64 bg-[#11131d] border-r border-white/5 flex flex-col fixed h-full z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+        <aside id="main-sidebar" class="w-64 bg-[#11131d] border-r border-white/5 flex flex-col fixed h-full z-50 transition-transform duration-300 -translate-x-full md:translate-x-0">
             <div class="p-6">
                 <h1 class="text-xl font-black italic text-[#97a9ff] tracking-tighter uppercase font-['Space_Grotesk'] mb-8">LOOTBOX ZENTRALE</h1>
                 <nav class="space-y-2">
@@ -85,7 +85,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 ml-0 lg:ml-64 p-6 pt-24 sm:p-10 relative z-10 transition-all">
+        <main class="flex-1 ml-0 md:ml-64 p-6 pt-24 md:pt-10 sm:p-10 relative z-10 transition-all">
             <section id="panel-generator" class="panel animate-fade-in">
                 <div class="max-w-4xl mx-auto">
                     <header class="mb-10">
@@ -122,9 +122,9 @@
                         <h2 class="text-4xl font-black uppercase tracking-tighter italic font-['Space_Grotesk'] hero-glow">Aufgaben-Matrix</h2>
                         <p class="text-[#aaaab7] text-sm uppercase tracking-widest font-bold">Lege fest, welche Aufgaben jeder Nutzer ziehen kann.</p>
                     </div>
-                    <button id="save-matrix-btn" class="btn-actuator py-3 px-8 text-sm">Speichern</button>
+                    <button id="save-matrix-btn" class="btn-actuator py-3 px-8 text-sm">Speichern Matrix</button>
                 </header>
-                <div class="user-selector mb-10 flex gap-4" id="matrix-user-selector"></div>
+                <div class="user-selector mb-10 flex flex-wrap gap-4" id="matrix-user-selector"></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="matrix-task-list"></div>
             </section>
 
@@ -155,7 +155,7 @@
                             <span class="material-symbols-outlined text-[#c67eff]">query_stats</span>
                             <h3 class="text-xl font-black uppercase tracking-tight">Loot-Simulator</h3>
                         </div>
-                        <p class="text-xs text-[#aaaab7] mb-6 font-medium leading-relaxed">Simuliere 100 Box-Öffnungen basierend auf deinen aktuellen Einstellungen.</p>
+                        <p class="text-xs text-[#aaaab7] mb-6 font-medium leading-relaxed">Simuliere 100 Box-Öffnungen.</p>
                         <button onclick="runSimulation()" class="btn-actuator py-3 px-6 text-sm bg-gradient-to-r from-[#c67eff] to-[#97a9ff] text-indigo-950">100 Test-Boxen würfeln</button>
                         <div id="sim-result" class="mt-8 hidden space-y-3"></div>
                     </div>
@@ -192,14 +192,9 @@
 
         const EMOJI_LIST = ['⚡','🔥','🚀','☄️','📱','🖥️','🍬','🔄','🌙','🎬','🍕','💰','💶','🎮','🥐','🏖️','🌟','💎','🎁','🛡️','🏹','🧪','💊','🩹','🧼','🧽','🧹','🧺','🧸','🎈'];
 
-        // MOBILE SIDEBAR
-        window.toggleSidebar = () => {
-            document.body.classList.toggle('sidebar-open');
-        };
-
-        window.closeSidebarMobile = () => {
-            document.body.classList.remove('sidebar-open');
-        };
+        // NAVIGATION HANDLERS
+        window.toggleSidebar = () => document.body.classList.toggle('sidebar-open');
+        window.closeSidebarMobile = () => document.body.classList.remove('sidebar-open');
 
         async function init() {
             await loadData();
@@ -209,9 +204,11 @@
         }
 
         async function loadData() {
+            // Load state from States collection
             const masterSnap = await getDoc(doc(db, 'states', 'master'));
             if (masterSnap.exists()) masterState = masterSnap.data().state;
 
+            // Load loot settings
             const configSnap = await getDoc(doc(db, 'lootbox_config', 'settings'));
             if (configSnap.exists()) {
                 lootConfig = configSnap.data();
@@ -261,7 +258,7 @@
             const container = document.getElementById('tier-settings-container');
             container.innerHTML = ['bronze', 'silver', 'gold'].map(tier => `
                 <div class="flex items-center gap-4">
-                    <span class="w-20 text-[10px] font-black uppercase tracking-widest ${tier === 'gold' ? 'text-[#ffe792]' : (tier === 'silver' ? 'text-gray-300' : 'text-orange-400')}">${tier}</span>
+                    <span class="w-20 text-[10px] font-black uppercase tracking-widest ${tier === 'gold' ? 'text-[#ffe792]' : (tier === 'silver' ? 'text-gray-300' : 'text-orange-400')} font-['Space_Grotesk']">${tier}</span>
                     <input type="range" min="0" max="100" value="${lootConfig.tierSettings[tier]}" 
                            oninput="updateTierProb('${tier}', this.value)"
                            class="flex-1 h-1 bg-white/5 rounded-full appearance-none cursor-pointer accent-[#97a9ff]">
@@ -289,7 +286,7 @@
             const results = { bronze: 0, silver: 0, gold: 0 };
             const resArea = document.getElementById('sim-result');
             resArea.classList.remove('hidden');
-            resArea.innerHTML = '<p class="text-[10px] font-black uppercase text-[#97a9ff] animate-pulse">Simuliere...</p>';
+            resArea.innerHTML = '<p class="text-[10px] font-black uppercase text-[#97a9ff] animate-pulse">Simulator läuft...</p>';
             setTimeout(() => {
                 for(let i=0; i<100; i++) {
                     const rand = Math.random() * 100;
@@ -309,14 +306,14 @@
                         </div>
                     </div>
                 `).join('');
-            }, 500);
+            }, 600);
         };
 
         window.showPanel = (id, btn) => {
             document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('panel-' + id)?.classList.remove('hidden');
             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-            btn?.classList.add('active');
+            if (btn) btn.classList.add('active');
         };
 
         function renderUserSelectors() {
@@ -324,12 +321,37 @@
             const kids = Object.values(masterState.users).filter(u => u.role !== 'admin');
             document.getElementById('user-select').innerHTML = kids.map(k => `<option value="${k.id}">${k.name}</option>`).join('');
             document.getElementById('matrix-user-selector').innerHTML = kids.map(k => `
-                <button class="px-6 py-2 rounded-lg border border-white/10 text-xs font-black uppercase tracking-widest ${selectedUserId === k.id ? 'bg-[#97a9ff] text-indigo-950' : 'bg-white/5'}" 
+                <button class="px-6 py-2 rounded-lg border border-white/10 text-xs font-black uppercase tracking-widest ${selectedUserId === k.id ? 'bg-[#97a9ff] text-indigo-950 font-black' : 'bg-white/5 text-[#aaaab7]'}" 
                         onclick="selectUser('${k.id}')">${k.name}</button>
             `).join('');
             if (!selectedUserId && kids.length > 0) selectUser(kids[0].id);
             renderMasterLinks();
         }
+
+        function renderMasterLinks() {
+            if (!masterState) return;
+            const kids = Object.values(masterState.users).filter(u => u.role !== 'admin');
+            const container = document.getElementById('master-links-container');
+            const baseUrl = window.location.href.split('admin.html')[0];
+            container.innerHTML = kids.map(k => {
+                const url = `${baseUrl}index.html?userId=${k.id}`;
+                return `
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-black uppercase text-[#97a9ff] font-['Space_Grotesk']">${k.name}</span>
+                            <button onclick="copyToClipboard('${url}', this)" class="text-[10px] font-black uppercase bg-white/5 px-2 py-1 rounded hover:bg-[#97a9ff]/20 transition-all">LINK</button>
+                        </div>
+                        <div class="text-[9px] font-mono text-[#545a75] truncate">${url}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.copyToClipboard = (text, btn) => {
+            navigator.clipboard.writeText(text);
+            const old = btn.innerText; btn.innerText = "OK ✅";
+            setTimeout(() => btn.innerText = old, 1500);
+        };
 
         window.selectUser = (id) => {
             selectedUserId = id;
@@ -338,13 +360,19 @@
         };
 
         function renderTaskList() {
-            if (!selectedUserId || !masterState) return;
+            const list = document.getElementById('matrix-task-list');
+            if (!selectedUserId || !masterState) {
+                list.innerHTML = `<p class="col-span-3 text-center text-xs text-[#aaaab7] py-20 italic">Warte auf Nutzer-Daten...</p>`;
+                return;
+            }
             const allowedIds = lootConfig.tasks[selectedUserId] || masterState.taskTemplates.map(t => t.id);
-            document.getElementById('matrix-task-list').innerHTML = masterState.taskTemplates.map(task => `
-                <div class="matrix-card p-4 rounded-xl flex items-center gap-4">
-                    <input type="checkbox" id="task-${task.id}" ${allowedIds.includes(task.id) ? 'checked' : ''} class="w-5 h-5 rounded border-white/20 bg-black/40 text-[#97a9ff]">
+
+            list.innerHTML = masterState.taskTemplates.map(task => `
+                <div class="matrix-card p-4 rounded-xl flex items-center gap-4 group">
+                    <input type="checkbox" id="task-${task.id}" ${allowedIds.includes(task.id) ? 'checked' : ''} 
+                           class="w-5 h-5 rounded border-white/20 bg-black/40 text-[#97a9ff] focus:ring-0 cursor-pointer">
                     <div>
-                        <p class="text-[10px] font-black uppercase text-[#aaaab7]">${task.raum}</p>
+                        <p class="text-[10px] font-black uppercase text-[#aaaab7] tracking-widest font-['Space_Grotesk']">${task.raum}</p>
                         <p class="text-sm font-bold text-white uppercase">${task.titel}</p>
                     </div>
                 </div>
@@ -353,24 +381,24 @@
 
         function renderPowerUpPool() {
             document.getElementById('reward-pool').innerHTML = lootConfig.powerups.map((pu, idx) => `
-                <div class="glass-hud p-6 rounded-2xl border-white/10 group relative">
+                <div class="glass-hud p-6 rounded-2xl border-white/10 group relative transition-all">
                     <div class="flex justify-between items-start mb-4">
                         <div class="relative">
-                            <button onclick="toggleEmojiPicker(${idx})" class="w-12 h-12 rounded-lg bg-[#97a9ff]/10 flex items-center justify-center border border-[#97a9ff]/20 text-2xl">${pu.icon}</button>
+                            <button onclick="toggleEmojiPicker(${idx})" class="w-12 h-12 rounded-lg bg-[#97a9ff]/10 flex items-center justify-center border border-[#97a9ff]/20 hover:border-[#97a9ff]/60 transition-all text-2xl">${pu.icon}</button>
                             <div id="emoji-picker-${idx}" class="hidden absolute top-14 left-0 z-50 bg-[#1c1f2b] border border-white/10 rounded-xl p-3 grid grid-cols-5 gap-2 w-48 shadow-2xl">
-                                ${EMOJI_LIST.map(e => `<span onclick="updateIcon(${idx}, '${e}')" class="cursor-pointer hover:scale-125 p-1 text-xl">${e}</span>`).join('')}
+                                ${EMOJI_LIST.map(e => `<span onclick="updateIcon(${idx}, '${e}')" class="cursor-pointer hover:scale-125 transition-transform p-1 text-xl">${e}</span>`).join('')}
                             </div>
                         </div>
-                        <button onclick="deletePU(${idx})" class="opacity-0 group-hover:opacity-100 p-2 text-red-400"><span class="material-symbols-outlined">delete</span></button>
+                        <button onclick="deletePU(${idx})" class="opacity-0 group-hover:opacity-100 p-2 text-red-500/50 hover:text-red-400 transition-colors"><span class="material-symbols-outlined text-sm">delete</span></button>
                     </div>
-                    <input type="text" value="${pu.name}" onblur="updateName(${idx}, this.value)" class="bg-transparent border-none w-full text-lg font-black uppercase p-0 outline-none focus:text-[#97a9ff]">
-                    <textarea onblur="updateDesc(${idx}, this.value)" class="bg-transparent border-none w-full text-xs text-[#aaaab7] p-0 outline-none resize-none h-10 mt-1">${pu.desc}</textarea>
-                    <div class="space-y-4 mt-4">
+                    <input type="text" value="${pu.name}" onblur="updateName(${idx}, this.value)" class="bg-transparent border-none w-full text-lg font-black uppercase p-0 outline-none focus:text-[#97a9ff] focus:ring-0 transition-colors font-['Space_Grotesk']">
+                    <textarea onblur="updateDesc(${idx}, this.value)" class="bg-transparent border-none w-full text-xs text-[#aaaab7] p-0 outline-none resize-none h-10 mt-1 focus:text-white focus:ring-0 transition-colors leading-tight">${pu.desc}</textarea>
+                    <div class="space-y-4 mt-6">
                         ${['bronze', 'silver', 'gold'].map(tier => `
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="text-[10px] font-black uppercase tracking-widest ${tier === 'gold' ? 'text-[#ffe792]' : (tier === 'silver' ? 'text-gray-300' : 'text-orange-400')}">${tier}</span>
-                                    <input type="number" min="0" max="100" value="${pu.probs[tier]}" onchange="updateProb(${idx}, '${tier}', this.value)" class="bg-black/40 w-10 text-center text-[10px] font-black rounded border border-white/5">
+                                    <span class="text-[9px] font-black uppercase tracking-widest ${tier === 'gold' ? 'text-amber-300' : (tier === 'silver' ? 'text-gray-300' : 'text-orange-400')} font-['Space_Grotesk']">${tier}</span>
+                                    <input type="number" min="0" max="100" value="${pu.probs[tier]}" onchange="updateProb(${idx}, '${tier}', this.value)" class="bg-black/40 w-10 text-center text-[10px] font-black rounded border border-white/5 p-0.5 focus:border-[#97a9ff] focus:ring-0 outline-none">
                                 </div>
                                 <input type="range" min="0" max="100" value="${pu.probs[tier]}" oninput="updateProb(${idx}, '${tier}', this.value)" class="w-full h-1 bg-white/5 rounded-full appearance-none accent-[#97a9ff]">
                             </div>
@@ -391,21 +419,15 @@
         window.updateName = (idx, val) => { lootConfig.powerups[idx].name = val; saveConfig(); };
         window.updateDesc = (idx, val) => { lootConfig.powerups[idx].desc = val; saveConfig(); };
         window.updateProb = (idx, tier, val) => { lootConfig.powerups[idx].probs[tier] = parseInt(val) || 0; renderPowerUpPool(); saveConfig(); };
-        window.deletePU = (idx) => { if (confirm("Löschen?")) { lootConfig.powerups.splice(idx, 1); renderPowerUpPool(); saveConfig(); } };
-        window.addPowerUp = () => { lootConfig.powerups.unshift({ id: 'pu-'+Date.now(), name: 'NEU', icon: '🎁', desc: '...', probs: { bronze: 5, silver: 15, gold: 30 } }); renderPowerUpPool(); saveConfig(); };
-        window.forceSeedRewards = async () => { if (confirm("Reset?")) { lootConfig.powerups = getInitialRewards(); await saveConfig(); renderPowerUpPool(); } };
-
-        window.copyToClipboard = (text, btn) => {
-            navigator.clipboard.writeText(text);
-            const old = btn.innerText; btn.innerText = "KOPIERT ✅";
-            setTimeout(() => btn.innerText = old, 2000);
-        };
+        window.deletePU = (idx) => { if (confirm("Belohnung wirklich löschen?")) { lootConfig.powerups.splice(idx, 1); renderPowerUpPool(); saveConfig(); } };
+        window.addPowerUp = () => { lootConfig.powerups.unshift({ id: 'pu-'+Date.now(), name: 'NEU', icon: '🎁', desc: 'Bonus-Beschreibung...', probs: { bronze: 5, silver: 15, gold: 30 } }); renderPowerUpPool(); saveConfig(); };
+        window.forceSeedRewards = async () => { if (confirm("Alle Belohnungen zurücksetzen?")) { lootConfig.powerups = getInitialRewards(); await saveConfig(); renderPowerUpPool(); } };
 
         document.getElementById('save-matrix-btn').onclick = async () => {
             const allowedIds = masterState.taskTemplates.filter(t => document.getElementById(`task-${t.id}`).checked).map(t => t.id);
             lootConfig.tasks[selectedUserId] = allowedIds;
             await saveConfig();
-            alert("Gespeichert!");
+            alert("Matrix für Nutzer gespeichert! ✅");
         };
 
         document.getElementById('generate-btn').onclick = async () => {
